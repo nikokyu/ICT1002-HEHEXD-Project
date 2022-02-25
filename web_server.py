@@ -1,4 +1,4 @@
-from flask import Flask, render_template, jsonify, request,Response
+from flask import Flask, render_template, jsonify, request,Response, redirect, url_for
 import argparse
 import sys
 import json
@@ -8,6 +8,9 @@ from gevent.pywsgi import WSGIServer
 from datetime import datetime
 from itertools import zip_longest
 gevent.monkey.patch_all()
+import os
+from os.path import join, dirname, realpath
+import pandas as pd
 
 
 
@@ -49,21 +52,44 @@ for i in zipped:
 
 
 
-@app.route("/")
+# For uploading files
+# enable debugging mode
+app.config["DEBUG"] = True
+
+# Upload folder
+UPLOAD_FOLDER = 'static/files'
+app.config['UPLOAD_FOLDER'] =  UPLOAD_FOLDER
+
+
+
+@app.route("/" )
+def upload():
+    return render_template('index2.html')
+
+@app.route("/home")
 def home():
     return render_template('index.html', networklogs=networklogHTML)
 
-@app.route("/upload")
-def upload():
-    return render_template('index2.html', networklogs=networklogHTML)
 
+
+# Get the uploaded files
+@app.route("/", methods=['POST'])
+def uploadFiles():
+      # get the uploaded file
+      uploaded_file = request.files['file']
+      if uploaded_file.filename != '':
+           file_path = os.path.join(app.config['UPLOAD_FOLDER'], uploaded_file.filename)
+          # set the file path
+           uploaded_file.save(file_path)
+          # save the file
+      return redirect(url_for('home'))
 
 
 if __name__ == '__main__':
    try:
 
         host = '0.0.0.0'
-        port = 8000
+        port = 80
         parser = argparse.ArgumentParser()        
         parser.add_argument('port',type=int)
         
