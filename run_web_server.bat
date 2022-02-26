@@ -1,4 +1,4 @@
-call C:\Users\Kelly\Anaconda3\condabin\activate.bat
+call C:\Users\%USERNAME%\Anaconda3\condabin\activate.bat
 
 cd /d %~dp0
 
