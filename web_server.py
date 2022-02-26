@@ -1,4 +1,4 @@
-from flask import Flask, render_template, jsonify, request,Response, redirect, url_for
+from flask import Flask, render_template, jsonify, request,Response, redirect, url_for, abort
 import argparse
 import sys
 import json
@@ -10,7 +10,7 @@ from itertools import zip_longest
 gevent.monkey.patch_all()
 import os
 from os.path import join, dirname, realpath
-import pandas as pd
+
 
 
 
@@ -30,10 +30,10 @@ networklogs = (
     NetworkLog('0', '192.168.10.21',      'Singapore',   37.9045286, -122.1445772),
     NetworkLog('1', '192.167.21.21', 'Malaysia', 37.8884474, -122.1155922),
     NetworkLog('2', '1.23.12.1',     'Japan', 25.9093673, -126.0580063),
-    NetworkLog('3', '192.167.21.212131', 'Korea', 1.43801, 103.789),
+    NetworkLog('3', '192.167.21.25', 'Korea', 1.43801, 103.789),
 
 )
-networklog_by_key = {networklog.country: networklog for networklog in networklogs}
+networklog_by_key = {networklog.key: networklog for networklog in networklogs}
 
 
 networklogCountry = []
@@ -61,16 +61,10 @@ UPLOAD_FOLDER = 'static/files'
 app.config['UPLOAD_FOLDER'] =  UPLOAD_FOLDER
 
 
-
+###################### Upload Page ################################################################
 @app.route("/" )
 def upload():
-    return render_template('index2.html')
-
-@app.route("/home")
-def home():
-    return render_template('index.html', networklogs=networklogHTML)
-
-
+    return render_template('upload.html')
 
 # Get the uploaded files
 @app.route("/", methods=['POST'])
@@ -83,6 +77,27 @@ def uploadFiles():
            uploaded_file.save(file_path)
           # save the file
       return redirect(url_for('home'))
+
+###################### Upload Page END ############################################################
+
+###################### Main Page ################################################################
+@app.route("/home")
+def home():
+    return render_template('index.html', networklogs=networklogHTML)
+
+@app.route("/home/<keycode>")
+def homeShowDetails(keycode):
+    networklog = networklog_by_key.get(keycode)
+    if networklog:
+        return render_template('info.html', networklog=networklog)
+    else:
+        abort(404)
+
+
+###################### Main Page End############################################################
+
+
+
 
 
 if __name__ == '__main__':

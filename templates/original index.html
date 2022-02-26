@@ -57,22 +57,69 @@
 
 
 
-     <div class="col-sm-12 text-left">
+    <!-- <div class="col-sm-12 text-left">
          <div class="card shadow mb-4">              
         <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
           <h6 class="m-0 font-weight-bold text-primary">Speed</h6>                
         </div>
         <div class="card-body"> 
           <div class="chart-area">
-            {% for networklog in networklogs %}
-            <p><a class="btn btn-primary btn-lg" href="home/{{networklog[0].key}}">{{networklog[0].ip}}</a></p>
-            {% endfor %}
+            <div id="status"></div>
+            <div id="chart_div"></div>
           </div>
         </div>
       </div>
     </div>
-    </div>
+    </div> -->
+    <div class="col-sm-6 text-left">
+        <!-- card START -->
+        <div class="card shadow mb-4">
+            <!-- card-header START -->
+            <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+                <h6 class="m-0 font-weight-bold text-primary">Map</h6>
+            </div>
+            <!-- card-header END -->
 
+            <!-- card-body START -->
+            <div class="card-body">
+                <div class="chart-area">
+                    <div id="map"></div>
+                </div>
+            </div>
+            <!-- card-body END-->
+        </div>
+        <!-- card END -->
+    </div>
+    <div class="col-sm-6 text-left">
+        <!-- card START -->
+        <div class="card shadow mb-4">
+            <!-- card-header START -->
+            <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+                <h6 class="m-0 font-weight-bold text-primary">IP Data</h6>
+            </div>
+            <!-- card-header END -->
+
+            <!-- card-body START -->
+            <div class="card-body">
+                <div class="chart-area">
+                    IP:
+                        <select id="ip" onChange="selectorChange()">
+                            {%for i in networklogs  %}
+                            <option value="{{i[0].lat}},{{i[0].lng}}">{{i[0].ip}}</option>
+                            {% endfor %}
+                        </select>
+                        <p><a class="btn btn-primary btn-lg" href="{{networklogs.ip}}">{{networklog.country}}</a></p>
+                    </br>
+
+                    <!-- Country:
+                        <select id="countryFilter" name="countryFilter">
+                            {%for i in networklogs if i[1] !='?'%}
+                            <option value={{i[1]}}>{{i[1]}}</option>
+                            {% endfor %}
+                        </select>
+                    </form>
+                    </br> -->
+                
 
                 </div>
             </div>

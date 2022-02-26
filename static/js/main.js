@@ -4,7 +4,9 @@ var lngSelector;
 var selector = document.getElementById("ip").value;
 var selectorArray = selector.split (",");
 var counter = 0;
-        
+
+
+
 selectorArray.forEach(function(entry){
     if (counter == 0){
         latSelector = parseFloat(entry);
@@ -16,6 +18,7 @@ selectorArray.forEach(function(entry){
  });
 
 function selectorChange(){
+    
     counter = 0;
     selector = document.getElementById("ip").value;
     selectorArray = selector.split (",");
