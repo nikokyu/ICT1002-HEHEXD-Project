@@ -5,7 +5,19 @@
     border-radius: 0;
     /*min-height: 80px;*/
 }
-
+.card {
+    width: 150px;
+    height: 160px;
+    display: inline-block;
+    padding: 10px;
+    border: 1px solid black;
+    margin-bottom: 10px;
+  }
+  
+  .filter {
+    margin-bottom: 30px;
+    display: block;
+  }
 
 #map {
     width: 100%;

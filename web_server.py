@@ -10,6 +10,7 @@ from itertools import zip_longest
 gevent.monkey.patch_all()
 import os
 from os.path import join, dirname, realpath
+import time
 
 
 
@@ -17,38 +18,37 @@ from os.path import join, dirname, realpath
 app = Flask(__name__)
 
 
-
 class NetworkLog:
-    def __init__(self, key, ip, country, lat, lng):
+    def __init__(self, key, ip, country, lat, lng, attack):
         self.key = key
         self.ip  = ip
         self.country = country
         self.lat  = lat
         self.lng  = lng
+        self.attack = attack
 
 networklogs = (
-    NetworkLog('0', '192.168.10.21',      'Singapore',   37.9045286, -122.1445772),
-    NetworkLog('1', '192.167.21.21', 'Malaysia', 37.8884474, -122.1155922),
-    NetworkLog('2', '1.23.12.1',     'Japan', 25.9093673, -126.0580063),
-    NetworkLog('3', '192.167.21.25', 'Korea', 1.43801, 103.789),
-
+    NetworkLog('0', '192.168.10.21',      'Singapore',   37.9045286, -122.1445772, 'Ransomware'),
+    NetworkLog('1', '192.167.21.21', 'Malaysia', 37.8884474, -122.1155922, 'Ransomware'),
+    NetworkLog('2', '1.23.12.1',     'Japan', 25.9093673, -126.0580063, 'Ddos'),
+    NetworkLog('3', '192.167.21.25', 'Korea', 1.43801, 103.789, 'Ddos'),
 )
+
+
+# To be confirmed on the final iteration
+# Leave all the code here for after backend is done ****
 networklog_by_key = {networklog.key: networklog for networklog in networklogs}
-
-
-networklogCountry = []
+networklog_by_attack = {networklog.attack: networklog for networklog in networklogs}
+networklogAttack = []
 networklogHTML = []
 for i in networklogs:
-    if i.country not in networklogCountry:
-        networklogCountry.append(i.country)
-
-
-
+    if i.attack not in networklogAttack:
+        networklogAttack.append(i.attack)
 longest = range(len(networklogs))
-zipped = zip_longest(networklogs, networklogCountry, longest, fillvalue='?')
-
+zipped = zip_longest(networklogs, networklogAttack, longest, fillvalue='?')
 for i in zipped:
     networklogHTML.append(i)
+
 
 
 
@@ -76,6 +76,7 @@ def uploadFiles():
           # set the file path
            uploaded_file.save(file_path)
           # save the file
+
       return redirect(url_for('home'))
 
 ###################### Upload Page END ############################################################
@@ -84,6 +85,7 @@ def uploadFiles():
 @app.route("/home")
 def home():
     return render_template('index.html', networklogs=networklogHTML)
+
 
 @app.route("/home/<keycode>")
 def homeShowDetails(keycode):
