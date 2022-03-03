@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <title>ICT 1002 Assignment</title>
+    <link rel="shortcut icon" href="../static/images/favicon.ico">
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+
+    <!-- Google Map API -->
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=default"></script>
+    <!-- <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDcTmvr28tpdV8iDiN1K57P_f5kuXmFen4&callback=initMap&v=weekly&channel=2"></script> -->
+
+    <script src="https://kit.fontawesome.com/a186d658a7.js" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="../static/css/styles.css">
+    <script defer>
+let map, heatmap;
+
+function initMap() {
+  map = new google.maps.Map(document.getElementById("map"), {
+    zoom: 2.2,
+    center: { lat: 46.048849, lng: 18.107034 },
+  });
+  heatmap = new google.maps.visualization.HeatmapLayer({
+    data: getPoints(),
+    map: map,
+  });
+
+  document
+    .getElementById("toggle-heatmap")
+    .addEventListener("click", toggleHeatmap);
+  document
+    .getElementById("change-gradient")
+    .addEventListener("click", changeGradient);
+  document
+    .getElementById("change-opacity")
+    .addEventListener("click", changeOpacity);
+  document
+    .getElementById("change-radius")
+    .addEventListener("click", changeRadius);
+}
+
+function toggleHeatmap() {
+  heatmap.setMap(heatmap.getMap() ? null : map);
+}
+
+function changeGradient() {
+  const gradient = [
+    "rgba(0, 255, 255, 0)",
+    "rgba(0, 255, 255, 1)",
+    "rgba(0, 191, 255, 1)",
+    "rgba(0, 127, 255, 1)",
+    "rgba(0, 63, 255, 1)",
+    "rgba(0, 0, 255, 1)",
+    "rgba(0, 0, 223, 1)",
+    "rgba(0, 0, 191, 1)",
+    "rgba(0, 0, 159, 1)",
+    "rgba(0, 0, 127, 1)",
+    "rgba(63, 0, 91, 1)",
+    "rgba(127, 0, 63, 1)",
+    "rgba(191, 0, 31, 1)",
+    "rgba(255, 0, 0, 1)",
+  ];
+
+  heatmap.set("gradient", heatmap.get("gradient") ? null : gradient);
+}
+
+function changeRadius() {
+  heatmap.set("radius", heatmap.get("radius") ? null : 20);
+}
+
+function changeOpacity() {
+  heatmap.set("opacity", heatmap.get("opacity") ? null : 0.2);
+}
+
+// Heatmap data: 500 Points
+function getPoints() {
+  var points = [];
+  {% for networklog in networklogs %}
+  points.push(new google.maps.LatLng(parseFloat("{{networklog.lat}}"), parseFloat("{{networklog.lng}}")));
+  console.log("{{networklog.lat}}");
+  console.log("{{networklog.lng}}");
+  {% endfor %}
+  return points;
+}
+    </script>
+<style>
+    #map {
+        height: 100%;
+      }
+
+      /* Optional: Makes the sample page fill the window. */
+      html,
+      body {
+        height: 100%;
+        margin: 0;
+        padding: 0;
+      }
+
+      #floating-panel {
+        position: absolute;
+        top: 10px;
+        left: 25%;
+        z-index: 5;
+        background-color: #fff;
+        margin-top: 5em;
+        padding: 5px;
+        border: 1px solid #999;
+        text-align: center;
+        font-family: "Roboto", "sans-serif";
+        line-height: 30px;
+        padding-left: 10px;
+      }
+
+      #floating-panel {
+        background-color: #fff;
+        border: 1px solid #999;
+        left: 25%;
+        padding: 5px;
+        position: absolute;
+        top: 10px;
+        z-index: 5;
+      }
+</style>
+
+
+</head>
+
+<body>
+    <nav class="navbar navbar-inverse">
+        <div class="container-fluid">
+            <!-- Brand and toggle get grouped for better mobile display -->
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+          <span class="sr-only">Toggle navigation</span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </button>
+            </div>
+
+            <!-- Collect the nav links, forms, and other content for toggling -->
+            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                <ul class="nav navbar-nav">
+                    <li class="active"><a href="/home">Home <span class="sr-only">(current)</span></a></li>
+                </ul>
+                <!-- Search bar -->
+                <ul class="nav navbar-nav navbar-right">
+                    <form class="navbar-form navbar-left">
+                        <div class="form-group">
+                            <input type="text" class="form-control" placeholder="Search">
+                        </div>
+                        <button type="submit" class="btn btn-default">Submit</button>
+                    </form>
+                </ul>
+            </div>
+            <!-- /.navbar-collapse -->
+        </div>
+        <!-- /.container-fluid -->
+    </nav>
+
+
+
+    <!-- <div class="col-sm-12 text-left">
+         <div class="card shadow mb-4">
+        <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+          <h6 class="m-0 font-weight-bold text-primary">Speed</h6>
+        </div>
+        <div class="card-body">
+          <div class="chart-area">
+            <div id="status"></div>
+            <div id="chart_div"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    </div> -->
+
+    <div id="floating-panel">
+        <button id="toggle-heatmap">Toggle Heatmap</button>
+        <button id="change-gradient">Change gradient</button>
+        <button id="change-radius">Change radius</button>
+        <button id="change-opacity">Change opacity</button>
+      </div>
+    <div id="map"></div>
+
+    <p>&nbsp;</p>
+
+    <div class="col-md-14 text-center with-border">
+        <footer class="container-fluid text-center">ICT1002 Python Assignment &copy; Map It!</footer>
+    </div>
+    <script
+      src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDcTmvr28tpdV8iDiN1K57P_f5kuXmFen4&callback=initMap&libraries=visualization&v=weekly&channel=2"
+      async
+    ></script>
+</body>
+
+</html>
