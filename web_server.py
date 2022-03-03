@@ -37,11 +37,20 @@ global networklogs
 
 # temporary only
 networklogs = [
-    NetworkLog('0', '192.168.10.21',      'Singapore',   37.9045286, -122.1445772, 'Ransomware'),
-    NetworkLog('1', '192.167.21.21', 'Malaysia', 37.8884474, -122.1155922, 'Ransomware'),
-    NetworkLog('2', '1.23.12.1',     'Japan', 25.9093673, -126.0580063, 'Ddos'),
-    NetworkLog('3', '192.167.21.25', 'Korea', 1.43801, 103.789, 'Ddos'),
+    NetworkLog('0', '192.168.10.21', 'example.com', 'Singapore',   37.9045286, -122.1445772, 'org', 'Ransomware'),
+    NetworkLog('1', '192.167.21.21', 'example.com', 'Malaysia', 37.8884474, -122.1155922, 'org', 'Ransomware'),
+    NetworkLog('2', '1.23.12.1', 'example.com', 'Japan', 25.9093673, -126.0580063, 'org', 'Ddos'),
+    NetworkLog('3', '192.167.21.25', 'example.com', 'Korea', 1.43801, 103.789, 'org', 'Ddos'),
 ]
+# Example IP API process
+ip_list = [['1.1.1.1',"Ddos"], ['2.2.2.2', "Ransomware"], ['3.3.3.3', "WannaCry"], ['4.4.4.4', "WannaDie"]]
+i = 4
+for ip in ip_list:
+    geo_dict = ip_process.geolocation(ip[0])
+    iStr = str(i)
+    networklogs.append(NetworkLog(iStr, ip[0], geo_dict['hostname'], geo_dict['country'], geo_dict['lat'], geo_dict['lng'], geo_dict['org'], ip[1]))
+    i = i+1
+
 networklog_by_key = {networklog.key: networklog for networklog in networklogs}
 
 # For uploading files
