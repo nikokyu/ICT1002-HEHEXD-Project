@@ -1,4 +1,4 @@
-from flask import Flask, render_template, jsonify, request,Response, redirect, url_for, abort
+from flask import Flask, render_template, jsonify, request, Response, redirect, url_for, abort, session
 import argparse
 import sys
 import json
@@ -11,62 +11,51 @@ gevent.monkey.patch_all()
 import os
 from os.path import join, dirname, realpath
 import time
-
-
-
+import preprocess
+import ip_process
+import ai_process
+from networklog import NetworkLog
+import secrets
 
 app = Flask(__name__)
 
+global networklogs
+# To be confirmed on the final iteration
+# Leave all the code here for after backend is done ****
+#networklog_by_key = {networklog.key: networklog for networklog in networklogs}
+#networklog_by_attack = {networklog.attack: networklog for networklog in networklogs}
+#networklogAttack = []
+#networklogHTML = []
+#for i in networklogs:
+    #if i.attack not in networklogAttack:
+        #networklogAttack.append(i.attack)
+#longest = range(len(networklogs))
+#zipped = zip_longest(networklogs, networklogAttack, longest, fillvalue='?')
+#for i in zipped:
+    #networklogHTML.append(i)
 
-class NetworkLog:
-    def __init__(self, key, ip, country, lat, lng, attack):
-        self.key = key
-        self.ip  = ip
-        self.country = country
-        self.lat  = lat
-        self.lng  = lng
-        self.attack = attack
-
+# temporary only
 networklogs = [
     NetworkLog('0', '192.168.10.21',      'Singapore',   37.9045286, -122.1445772, 'Ransomware'),
     NetworkLog('1', '192.167.21.21', 'Malaysia', 37.8884474, -122.1155922, 'Ransomware'),
     NetworkLog('2', '1.23.12.1',     'Japan', 25.9093673, -126.0580063, 'Ddos'),
     NetworkLog('3', '192.167.21.25', 'Korea', 1.43801, 103.789, 'Ddos'),
 ]
-
-
-
-
-# To be confirmed on the final iteration
-# Leave all the code here for after backend is done ****
 networklog_by_key = {networklog.key: networklog for networklog in networklogs}
-networklog_by_attack = {networklog.attack: networklog for networklog in networklogs}
-networklogAttack = []
-networklogHTML = []
-for i in networklogs:
-    if i.attack not in networklogAttack:
-        networklogAttack.append(i.attack)
-longest = range(len(networklogs))
-zipped = zip_longest(networklogs, networklogAttack, longest, fillvalue='?')
-for i in zipped:
-    networklogHTML.append(i)
-
-
-
 
 # For uploading files
 # enable debugging mode
 app.config["DEBUG"] = True
 
 # Upload folder
-UPLOAD_FOLDER = 'static/files'
-app.config['UPLOAD_FOLDER'] =  UPLOAD_FOLDER
+app.config['UPLOAD_FOLDER'] =  'static/files'
+app.config['SECRET_KEY'] =  secrets.token_hex(16)
 
 
 ###################### Upload Page ################################################################
 @app.route("/" )
 def upload():
-    return render_template('upload.html')
+    return render_template('index.html')
 
 # Get the uploaded files
 @app.route("/", methods=['POST'])
@@ -79,18 +68,26 @@ def uploadFiles():
            uploaded_file.save(file_path)
           # save the file
 
-      return redirect(url_for('home'))
+      return redirect(url_for('processing'))
 
 ###################### Upload Page END ############################################################
 
+
+###################### Processing #################################################################
+@app.route("/processing")
+def processing():
+    # do all processing here
+    # Preprocess data
+    # Feed into IP api
+    # Feed into AI model
+    # return networklogs and go to home page
+    print(ip_process.geolocation("223.25.69.206"))
+    return redirect(url_for('home'))
+###################### Processing End #############################################################
 ###################### Main Page ################################################################
 @app.route("/home")
 def home():
-    return render_template('index.html', networklogs=networklogHTML)
-
-@app.route("/home/all")
-def homeShowHeatmap():
-    return render_template('allInfo.html', networklogs=networklogHTML)
+    return render_template('home.html', networklogs=networklogs)
 
 @app.route("/home/<keycode>")
 def homeShowDetails(keycode):
@@ -102,7 +99,7 @@ def homeShowDetails(keycode):
 
 @app.route("/home/heatmap")
 def heatmap():
-    return render_template('allInfo.html', networklogs=networklogHTML)
+    return render_template('heatmap.html', networklogs=networklogs)
 
 
 ###################### Main Page End############################################################
