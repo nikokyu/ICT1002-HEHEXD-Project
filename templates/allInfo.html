@@ -87,7 +87,6 @@ function changeOpacity() {
 
 // Heatmap data: 500 Points
 function getPoints() {
-<<<<<<< HEAD
   {% block content %}
   {% for networklog in networklogs %}
   console.log("{{networklog[0].ip}}");
@@ -595,70 +594,6 @@ function getPoints() {
     new google.maps.LatLng(37.752986, -122.403112),
     new google.maps.LatLng(37.751266, -122.403355),
   ];
-=======
-
-  var mapArray = [];
-  mapArray.push(new google.maps.LatLng(46.048849, 18.107034));
-  mapArray.push(new google.maps.LatLng(46.048849, 18.107034));
-  mapArray.push(new google.maps.LatLng(46.048849, 18.107034));
-  mapArray.push(new google.maps.LatLng(46.048849, 18.107034));
-  mapArray.push(new google.maps.LatLng(46.048849, 18.107034));
-  mapArray.push(new google.maps.LatLng(46.048849, 18.107034));
-  mapArray.push(new google.maps.LatLng(46.048849, 18.107034));
-  mapArray.push(new google.maps.LatLng(46.048849, 18.107034));
-  mapArray.push(new google.maps.LatLng(46.048849, 18.107034));
-  mapArray.push(new google.maps.LatLng(46.048849, 18.107034));
-  mapArray.push(new google.maps.LatLng(46.048849, 18.107034));
-  mapArray.push(new google.maps.LatLng(46.048849, 18.107034));
-  mapArray.push(new google.maps.LatLng(46.048849, 18.107034));
-  mapArray.push(new google.maps.LatLng(46.048849, 18.107034));
-  mapArray.push(new google.maps.LatLng(46.048849, 18.107034));
-  mapArray.push(new google.maps.LatLng(46.048849, 18.107034));
-  mapArray.push(new google.maps.LatLng(46.048849, 18.107034));
-  mapArray.push(new google.maps.LatLng(46.048849, 18.107034));
-  mapArray.push(new google.maps.LatLng(46.048849, 18.107034));
-  mapArray.push(new google.maps.LatLng(46.048849, 18.107034));
-  mapArray.push(new google.maps.LatLng(46.048849, 18.107034));
-  mapArray.push(new google.maps.LatLng(46.048849, 18.107034));
-  mapArray.push(new google.maps.LatLng(46.048849, 18.107034));
-  mapArray.push(new google.maps.LatLng(46.048849, 18.107034));
-  mapArray.push(new google.maps.LatLng(46.048849, 18.107034));
-  mapArray.push(new google.maps.LatLng(46.048849, 18.107034));
-  mapArray.push(new google.maps.LatLng(46.048849, 18.107034));
-  mapArray.push(new google.maps.LatLng(46.048849, 18.107034));
-  mapArray.push(new google.maps.LatLng(46.048849, 18.107034));
-  mapArray.push(new google.maps.LatLng(46.048849, 18.107034));
-  mapArray.push(new google.maps.LatLng(46.048849, 18.107034));
-  mapArray.push(new google.maps.LatLng(46.048849, 18.107034));
-  mapArray.push(new google.maps.LatLng(46.048849, 18.107034));
-  mapArray.push(new google.maps.LatLng(46.048849, 18.107034));
-  mapArray.push(new google.maps.LatLng(46.048849, 18.107034));
-  mapArray.push(new google.maps.LatLng(46.048849, 18.107034));
-  mapArray.push(new google.maps.LatLng(46.048849, 18.107034));
-  mapArray.push(new google.maps.LatLng(46.048849, 18.107034));
-  mapArray.push(new google.maps.LatLng(46.048849, 18.107034));
-  mapArray.push(new google.maps.LatLng(46.048849, 18.107034));
-  mapArray.push(new google.maps.LatLng(46.048849, 18.107034));
-  mapArray.push(new google.maps.LatLng(46.048849, 18.107034));
-  mapArray.push(new google.maps.LatLng(46.048849, 18.107034));
-  mapArray.push(new google.maps.LatLng(46.048849, 18.107034));
-  mapArray.push(new google.maps.LatLng(46.048849, 18.107034));
-  mapArray.push(new google.maps.LatLng(46.048849, 18.107034));
-  mapArray.push(new google.maps.LatLng(46.048849, 18.107034));
-  mapArray.push(new google.maps.LatLng(46.048849, 18.107034));
-  mapArray.push(new google.maps.LatLng(46.048849, 18.107034));
-  mapArray.push(new google.maps.LatLng(46.048849, 18.107034));
-  mapArray.push(new google.maps.LatLng(46.048849, 18.107034));
-  mapArray.push(new google.maps.LatLng(46.048849, 18.107034));
-  mapArray.push(new google.maps.LatLng(46.048849, 18.107034));
-  mapArray.push(new google.maps.LatLng(46.048849, 18.107034));
-  mapArray.push(new google.maps.LatLng(46.048849, 18.107034));
-  mapArray.push(new google.maps.LatLng(46.048849, 18.107034));
-
-  console.log(networkArray);
-  console.log(networkArray[2]);
-  return mapArray;
->>>>>>> b97ac5bb2257cc0f7786b8bd36cba86d9c39a0e4
 }
     </script>
 <style>
@@ -764,9 +699,9 @@ function getPoints() {
 
     <ul>
     {% networklog for networklog in networklogs %}
-        
+
           <li value = "{{networklog[0].lat}},{{network[0].lng}}"></li>
-        
+
         {% endfor %}
       </ul>
     <p>&nbsp;</p>
