@@ -11,6 +11,7 @@ gevent.monkey.patch_all()
 import os
 from os.path import join, dirname, realpath
 import time
+import geocoder
 
 
 
@@ -19,21 +20,45 @@ app = Flask(__name__)
 
 
 class NetworkLog:
-    def __init__(self, key, ip, country, lat, lng, attack):
+    def __init__(self, key, ip, country, lat, lng, attack, city, hostname, org):
         self.key = key
         self.ip  = ip
         self.country = country
         self.lat  = lat
         self.lng  = lng
         self.attack = attack
+        self.city = city
+        self.hostname = hostname
+        self.org = org
+        
 
-networklogs = (
+sample_nested_list = [['198.71.247.91', 'ddos'],['8.8.8.8', 'malware'],['116.87.77.81', 'ddos'], ['104.103.236.5', 'ok']]
+key = 0
+networklogs = []
+for log in sample_nested_list:
+    attack = log[1]
+    ip = log[0]
+    g = geocoder.ip(ip)
+    lat = g.lat
+    lng = g.lng
+    country = g.country
+    hostname = g.hostname
+    org = g.org
+    city = g.city
+    keyStr=str(key)
+    networklogs.append(NetworkLog(keyStr, ip, country, lat, lng, attack, city, hostname, org))
+    key+=1
+
+
+
+'''
+networklogs = [
     NetworkLog('0', '192.168.10.21',      'Singapore',   37.9045286, -122.1445772, 'Ransomware'),
     NetworkLog('1', '192.167.21.21', 'Malaysia', 37.8884474, -122.1155922, 'Ransomware'),
     NetworkLog('2', '1.23.12.1',     'Japan', 25.9093673, -126.0580063, 'Ddos'),
     NetworkLog('3', '192.167.21.25', 'Korea', 1.43801, 103.789, 'Ddos'),
-)
-
+]
+'''
 
 # To be confirmed on the final iteration
 # Leave all the code here for after backend is done ****
