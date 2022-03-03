@@ -1,4 +1,4 @@
-from flask import Flask, render_template, jsonify, request, Response, redirect, url_for, abort, session
+from flask import Flask, render_template, jsonify, request, Response, redirect, url_for, abort, session, send_file
 import argparse
 import sys
 import json
@@ -16,6 +16,7 @@ import ip_process
 import ai_process
 from networklog import NetworkLog
 import secrets
+
 
 app = Flask(__name__)
 
@@ -80,7 +81,9 @@ def processing():
     # Preprocess data
     # Feed into IP api
     # Feed into AI model
-    # return networklogs and go to home page
+    # Generate CSV
+    # Return networklogs and go to home page
+    
     print(ip_process.geolocation("223.25.69.206"))
     return redirect(url_for('home'))
 ###################### Processing End #############################################################
@@ -101,6 +104,10 @@ def homeShowDetails(keycode):
 def heatmap():
     return render_template('heatmap.html', networklogs=networklogs)
 
+@app.route('/home/download')
+def download():
+   path = "static/download/output.csv" 
+   return send_file(path , as_attachment=True)
 
 ###################### Main Page End############################################################
 

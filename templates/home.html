@@ -44,7 +44,8 @@
                 <!-- Search bar -->
                 <ul class="nav navbar-nav navbar-right">
                     <form class="navbar-form navbar-right">
-                        <input type="text" class="form-control" placeholder="Search for attack...">
+                        <input type="text" class="form-control" placeholder="Search">
+                        <a class="btn btn-primary" href="home/download">Export</a>
                     </form>
                 </ul>
             </div>
@@ -64,6 +65,8 @@
                 </div>
             </div>
         </div>
+
+        <div class="col-sm-12 text-left">
 <div class="row">
 
         {% for networklog in networklogs %}
@@ -80,7 +83,9 @@
         {% endfor %}
     </div>
 
+
     </div>
+
     <!-- {%for networklog in networklogs if networklog[1] !='?'%}
             <div class="col-sm-4">
                 <div class="card">
