@@ -27,12 +27,14 @@ class NetworkLog:
         self.lng  = lng
         self.attack = attack
 
-networklogs = (
+networklogs = [
     NetworkLog('0', '192.168.10.21',      'Singapore',   37.9045286, -122.1445772, 'Ransomware'),
     NetworkLog('1', '192.167.21.21', 'Malaysia', 37.8884474, -122.1155922, 'Ransomware'),
     NetworkLog('2', '1.23.12.1',     'Japan', 25.9093673, -126.0580063, 'Ddos'),
     NetworkLog('3', '192.167.21.25', 'Korea', 1.43801, 103.789, 'Ddos'),
-)
+]
+
+
 
 
 # To be confirmed on the final iteration
@@ -86,6 +88,9 @@ def uploadFiles():
 def home():
     return render_template('index.html', networklogs=networklogHTML)
 
+@app.route("/home/all")
+def homeShowHeatmap():
+    return render_template('allInfo.html', networklogs=networklogHTML)
 
 @app.route("/home/<keycode>")
 def homeShowDetails(keycode):
