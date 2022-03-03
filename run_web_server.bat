@@ -1,2 +1,2 @@
 .\venv\Scripts\activate
-python web_server.py 80
+cmd.exe /K "python web_server.py 80"
