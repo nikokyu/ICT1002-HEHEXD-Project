@@ -113,6 +113,9 @@ def uploadFiles():
 def home():
     return render_template('index.html', networklogs=networklogHTML)
 
+@app.route("/home/all")
+def homeShowHeatmap():
+    return render_template('allInfo.html', networklogs=networklogHTML)
 
 @app.route("/home/<keycode>")
 def homeShowDetails(keycode):
@@ -121,6 +124,10 @@ def homeShowDetails(keycode):
         return render_template('info.html', networklog=networklog)
     else:
         abort(404)
+
+@app.route("/home/heatmap")
+def heatmap():
+    return render_template('allInfo.html', networklogs=networklogHTML)
 
 
 ###################### Main Page End############################################################
@@ -134,13 +141,13 @@ if __name__ == '__main__':
 
         host = '0.0.0.0'
         port = 80
-        parser = argparse.ArgumentParser()        
+        parser = argparse.ArgumentParser()
         parser.add_argument('port',type=int)
-        
+
         args = parser.parse_args()
         if args.port:
             port = args.port
-                
+
         http_server = WSGIServer((host, port), app)
         app.debug = True
         http_server.serve_forever()

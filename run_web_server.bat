@@ -1,7 +1,2 @@
-call C:\Users\%USERNAME%\Anaconda3\condabin\activate.bat
-
-cd /d %~dp0
-
+call venv\Scripts\activate.bat
 cmd.exe /K "python web_server.py 80"
-
-rem http://localhost
