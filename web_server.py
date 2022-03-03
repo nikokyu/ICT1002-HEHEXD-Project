@@ -38,6 +38,8 @@ networklogs = []
 for log in sample_nested_list:
     attack = log[1]
     ip = log[0]
+
+    #g = geocoder.ip(ip, token = '238eca1d31ff39')
     g = geocoder.ip(ip)
     lat = g.lat
     lng = g.lng
