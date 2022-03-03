@@ -19,15 +19,6 @@
     <script defer>
 let map, heatmap;
 
-function printIP()
-{
-  console.log(networklogs);
-  for (let i = 0; i < networklogs.length; i++)
-  {
-    console.log(networklogs[i].ip);
-  }
-}
-printIP();
 function initMap() {
   map = new google.maps.Map(document.getElementById("map"), {
     zoom: 2.2,
@@ -696,14 +687,6 @@ function getPoints() {
       </div>
     <div id="map"></div>
 
-
-    <ul>
-    {% networklog for networklog in networklogs %}
-
-          <li value = "{{networklog[0].lat}},{{network[0].lng}}"></li>
-
-        {% endfor %}
-      </ul>
     <p>&nbsp;</p>
 
     <div class="col-md-14 text-center with-border">
