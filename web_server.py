@@ -101,15 +101,17 @@ def upload():
 # Get the uploaded files
 @app.route("/", methods=['POST'])
 def uploadFiles():
-      # get the uploaded file
-      uploaded_file = request.files['file']
-      if uploaded_file.filename != '':
-           file_path = os.path.join(app.config['UPLOAD_FOLDER'], "input.pcap")
-          # set the file path
-           uploaded_file.save(file_path)
-          # save the file
+# get the uploaded file
+    uploaded_file = request.files['file']
+    if uploaded_file.filename != '':
+        file_path = os.path.join(app.config['UPLOAD_FOLDER'], "input.pcap")
+        # set the file path
+        uploaded_file.save(file_path)
+        # save the file
+        return redirect(url_for('processing'))
+    else:
+        return redirect(url_for('/'))
 
-      return redirect(url_for('processing'))
 
 ###################### Upload Page END ############################################################
 
@@ -135,10 +137,12 @@ def processing():
     for ip in ipaddrs:
         dictIP[ip] = ip_process.geolocation(ip)
     # generate networklogs
+    i = 0
     for index, row in dataset.iterrows():
         dict = dictIP[row['srcip']]
-        networklogs.append(NetworkLog(index, row['srcip'], row['sport'], row['dstip'], row['dport'], dict['hostname'],
+        networklogs.append(NetworkLog(str(i), row['srcip'], row['sport'], row['dstip'], row['dport'], dict['hostname'],
         dict['country'], dict['lat'], dict['lng'], dict['org'], row['attackcat']))
+        i += 1
     networklog_by_key = {networklog.key: networklog for networklog in networklogs}
     dictAttack = getAttackCounterDictionary.getAttack(networklogs)
     dictCountry = getCountryDictionary.getCountry(networklogs)
@@ -169,7 +173,7 @@ def heatmap():
 
 @app.route('/home/heatmap/download')
 def download():
-    path = "static/download/output.csv"
+    path = "static/files/export.csv"
     export.exportCSV(networklogs)
     return send_file(path , as_attachment=True)
 
@@ -177,7 +181,15 @@ def download():
 
 app.route('/end')
 def end():
-    # delete variables and start over
+    # cleanup when end
+    global networklogs
+    global networklog_by_key
+    global dictAttack
+    global dictCountry
+    networklogs = []
+    networklog_by_key = {}
+    dictAttack = {}
+    dictCountry = {}
     redirect(url_for('/'))
 
 
