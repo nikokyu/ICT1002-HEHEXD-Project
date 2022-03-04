@@ -66,40 +66,22 @@
             </div>
         </div>
 
-        <div class="col-sm-12 text-left">
-<div class="row">
-
-        {% for networklog in networklogs %}
-        <div class="col-sm-4" data-string="{{networklog.attack}}">
-            <div class="card">
-                <h5 class="card-header font-weight-bold">IP: {{networklog.ip}}</h5>
-                <div class="card-body">
-                    <p class="card-text">Country: {{networklog.country}} </p>
-                    <p class="card-text">Type of Attack: {{networklog.attack}}</p>
-                    <a class="btn btn-primary" href="home/{{networklog.key}}">Show Map</a>
-                </div>
-            </div>
-        </div>
-        {% endfor %}
-    </div>
-
-
-    </div>
-
-    <!-- {%for networklog in networklogs if networklog[1] !='?'%}
-            <div class="col-sm-4">
-                <div class="card">
-                    <h5 class="card-header font-weight-bold">Type of Attack</h5>
-                    <div class="card-body">
-                        <p class="card-text">{{networklog[1]}}</p>
-                        <a class="btn btn-primary" href="{{networklog[1]}}">Show IPs</a>
-                    </div>
-                </div>
-            </div>
-            {% endfor %} -->
-
-
-
+<div class="col-sm-12 text-left">
+  <div class="row">
+          {% for networklog in networklogs %}
+          <div class="networklogcard col-sm-4" data-string="{{networklog.attack}}">
+              <div class="card">
+                  <h5 class="card-header font-weight-bold">IP: {{networklog.ip}}</h5>
+                  <div class="card-body">
+                      <p class="card-text">Country: {{networklog.country}} </p>
+                      <p class="card-text">Type of Attack: {{networklog.attack}}</p>
+                      <a class="btn btn-primary" href="home/{{networklog.key}}">Show Map</a>
+                  </div>
+              </div>
+          </div>
+          {% endfor %}
+  </div>
+</div>
 
     <p>&nbsp;</p>
 
@@ -110,7 +92,7 @@
         $(".form-control").on("keyup", function () {
             var input = $(this).val().toUpperCase();
 
-            $(".col-sm-4").each(function () {
+            $(".networklogcard").each(function () {
                 if ($(this).data("string").toUpperCase().indexOf(input) < 0) {
                     $(this).hide();
                 } else {

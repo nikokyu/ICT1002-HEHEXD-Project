@@ -20,8 +20,14 @@ import export
 
 
 app = Flask(__name__)
+# For uploading files
+# enable debugging mode
+app.config["DEBUG"] = True
 
-global networklogs
+# Upload folder
+app.config['UPLOAD_FOLDER'] =  'static/files'
+app.config['SECRET_KEY'] =  secrets.token_hex(16)
+
 # To be confirmed on the final iteration
 # Leave all the code here for after backend is done ****
 #networklog_by_key = {networklog.key: networklog for networklog in networklogs}
@@ -48,20 +54,10 @@ ip_list = [['1.1.1.1',"Ddos"], ['2.2.2.2', "Ransomware"], ['3.3.3.3', "WannaCry"
 i = 4
 for ip in ip_list:
     geo_dict = ip_process.geolocation(ip[0])
-    iStr = str(i)
-    networklogs.append(NetworkLog(iStr, ip[0], geo_dict['hostname'], geo_dict['country'], geo_dict['lat'], geo_dict['lng'], geo_dict['org'], ip[1]))
+    networklogs.append(NetworkLog(str(i), ip[0], geo_dict['hostname'], geo_dict['country'], geo_dict['lat'], geo_dict['lng'], geo_dict['org'], ip[1]))
     i = i+1
 
 networklog_by_key = {networklog.key: networklog for networklog in networklogs}
-
-# For uploading files
-# enable debugging mode
-app.config["DEBUG"] = True
-
-# Upload folder
-app.config['UPLOAD_FOLDER'] =  'static/files'
-app.config['SECRET_KEY'] =  secrets.token_hex(16)
-
 
 ###################### Upload Page ################################################################
 @app.route("/" )
@@ -93,7 +89,7 @@ def processing():
     # Feed into AI model
     # Generate CSV
     # Return networklogs and go to home page
-    
+
     print(ip_process.geolocation("223.25.69.206"))
     return redirect(url_for('home'))
 ###################### Processing End #############################################################
@@ -121,8 +117,6 @@ def download():
     return send_file(path , as_attachment=True)
 
 ###################### Main Page End############################################################
-
-
 
 
 
