@@ -14,11 +14,10 @@
     <!-- Google Map API -->
     <script src="https://polyfill.io/v3/polyfill.min.js?features=default"></script>
     <!-- <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDcTmvr28tpdV8iDiN1K57P_f5kuXmFen4&callback=initMap&v=weekly&channel=2"></script> -->
-    <script defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDcTmvr28tpdV8iDiN1K57P_f5kuXmFen4&callback=initMap&v=weekly&channel=2"></script>
+
     <script src="https://kit.fontawesome.com/a186d658a7.js" crossorigin="anonymous"></script>
     <link rel="stylesheet" href="../static/css/styles.css">
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-
     <script defer>
 let map, heatmap;
 
@@ -83,15 +82,13 @@ function changeOpacity() {
 function getPoints() {
   var points = [];
   {% for networklog in networklogs %}
-    points.push(new google.maps.LatLng(parseFloat("{{networklog.lat}}"), parseFloat("{{networklog.lng}}")));
+  points.push(new google.maps.LatLng(parseFloat("{{networklog.lat}}"), parseFloat("{{networklog.lng}}")));
+  console.log("{{networklog.lat}}");
+  console.log("{{networklog.lng}}");
   {% endfor %}
   return points;
 }
     </script>
-    
-    
-    
-
 <style>
     #map {
         height: 100%;
@@ -223,7 +220,7 @@ function getPoints() {
 
       </div>
     </div>
-    
+
 
     <p>&nbsp;</p>
 
@@ -241,20 +238,20 @@ function getPoints() {
       var dataArray = [];
       var colors = [];
 
-      
+
 
       {% for attack in dictAttack %}
       labelsAttackArray.push("{{attack}}");
       dataAttackArray.push("{{dictAttack[attack]}}");
       colors1.push(randColors());
-      {% endfor %} 
+      {% endfor %}
 
       {% for country in dictCountry %}
       labelsArray.push("{{country}}");
       dataArray.push("{{dictCountry[country]}}");
       colors.push(randColors());
-      {% endfor %} 
-      
+      {% endfor %}
+
       var config1 = {
         type: 'pie',
         data: {
@@ -281,20 +278,12 @@ window.onload = function() {
   var ctx2 = document.getElementById("myChart2");
   window.myLine = new Chart(ctx2, config2);
     }
-
-  
-    </script>
-
-<script>
-  //Country Pie Chart Script
-
-  
-
-  
-  
-  
-  
 </script>
-</body>
 
-</html>
+    <script
+          src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDcTmvr28tpdV8iDiN1K57P_f5kuXmFen4&callback=initMap&libraries=visualization&v=weekly&channel=2"
+          async
+        ></script>
+    </body>
+
+    </html>
