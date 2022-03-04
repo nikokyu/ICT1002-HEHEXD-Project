@@ -4,6 +4,7 @@ import sys
 import json
 import gevent
 import gevent.monkey
+import pandas as pd
 from gevent.pywsgi import WSGIServer
 from datetime import datetime
 from itertools import zip_longest
@@ -19,6 +20,8 @@ import secrets
 import export
 import getAttackCounterDictionary
 import getCountryDictionary
+global networklogs
+global ipaddrs
 
 # For pagination
 class PageResult:
@@ -116,9 +119,14 @@ def uploadFiles():
 @app.route("/processing")
 def processing():
     # do all processing here
+    global networklogs
+    global ipaddrs
     # Preprocess data
-    # Feed into IP api
     # Feed into AI model
+    dataset = ai_process.predict("static/files/input.csv")
+
+    # Feed into IP api
+    ipaddrs = dataset.iloc[:, 0].values.tolist()
     # Generate CSV
     # Return networklogs and go to home page
     global networklogs
@@ -148,7 +156,7 @@ def heatmap():
 
 @app.route('/home/download')
 def download():
-    path = "static/download/output.csv"
+    path = "static/files/export.csv"
     export.exportCSV(networklogs)
     return send_file(path , as_attachment=True)
 

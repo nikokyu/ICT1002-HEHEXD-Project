@@ -1,0 +1,24 @@
+This application uses the ipinfo free service to pull geolocation information. 
+By default, the ipinfo API has a rate limit of 1,000 requests a day. We can create an account with the service provider and use an access token that will allow the user to increase the rate limit to 50,000 requests a month with a free account, or more with a paid account. 
+
+In order to implement the token, the user is required to modify the Geocoder library. 
+Find out where the library is installed on your computer (using 'pip install geocoder' in CMD will say so), the file path might look something like this:
+
+C:\Users\dejun\AppData\Local\Programs\Python\Python310\Lib\site-packages\geocoder
+
+Open the 'ipinfo.py' file, and replace the "_before_initialize" function with the one shown below:
+
+def _before_initialize(self, location, **kwargs):
+        token = kwargs.get('token') or ''
+        if location.lower() == 'me' or location == '':
+            self.url = 'http://ipinfo.io/json?token={0}'.format(token)
+        else:
+            self.url = 'http://ipinfo.io/{0}/json?token={1}'.format(self.location, token)
+
+
+The access token, generated from ipinfo's website with an account can then be added in "ip_process.py". 
+For this submission, the token has already been added, but the geocoder library needs to be modified for the token to be used. 
+
+Special thanks to user razmikarm for sharing this implementation on Github:
+https://github.com/DenisCarriere/geocoder/pull/443/commits/5395d8a9201f84cdfbc4c13b71d1da5831a7a200
+

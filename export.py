@@ -1,10 +1,10 @@
-import csv  
+import csv
 import os
 
 
 def exportCSV(networklogs):
-    path = "static/download/output.csv" 
-    
+    path = "static/files/export.csv"
+
     header = ['ip', 'hostname', 'country', 'lat', 'lng', 'org', 'attack']
 
     os.remove(path)
