@@ -82,8 +82,6 @@ function getPoints() {
   var points = [];
   {% for networklog in networklogs %}
     points.push(new google.maps.LatLng(parseFloat("{{networklog.lat}}"), parseFloat("{{networklog.lng}}")));
-    console.log("{{networklog.lat}}");
-    console.log("{{networklog.lng}}");
   {% endfor %}
   return points;
 }
