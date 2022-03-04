@@ -14,7 +14,7 @@
     <!-- Google Map API -->
     <script src="https://polyfill.io/v3/polyfill.min.js?features=default"></script>
     <!-- <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDcTmvr28tpdV8iDiN1K57P_f5kuXmFen4&callback=initMap&v=weekly&channel=2"></script> -->
-
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDcTmvr28tpdV8iDiN1K57P_f5kuXmFen4&callback=initMap&libraries=visualization&v=weekly&channel=2" async></script>
     <script src="https://kit.fontawesome.com/a186d658a7.js" crossorigin="anonymous"></script>
     <link rel="stylesheet" href="../static/css/styles.css">
     <script defer>
@@ -81,9 +81,9 @@ function changeOpacity() {
 function getPoints() {
   var points = [];
   {% for networklog in networklogs %}
-  points.push(new google.maps.LatLng(parseFloat("{{networklog.lat}}"), parseFloat("{{networklog.lng}}")));
-  console.log("{{networklog.lat}}");
-  console.log("{{networklog.lng}}");
+    points.push(new google.maps.LatLng(parseFloat("{{networklog.lat}}"), parseFloat("{{networklog.lng}}")));
+    console.log("{{networklog.lat}}");
+    console.log("{{networklog.lng}}");
   {% endfor %}
   return points;
 }
@@ -193,10 +193,6 @@ function getPoints() {
     <div class="col-md-14 text-center with-border">
         <footer class="container-fluid text-center">ICT1002 Python Assignment &copy; Map It!</footer>
     </div>
-    <script
-      src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDcTmvr28tpdV8iDiN1K57P_f5kuXmFen4&callback=initMap&libraries=visualization&v=weekly&channel=2"
-      async
-    ></script>
 </body>
 
 </html>

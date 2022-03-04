@@ -15,18 +15,23 @@
     <!-- <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDcTmvr28tpdV8iDiN1K57P_f5kuXmFen4&callback=initMap&v=weekly&channel=2"></script> -->
 
     <script src="https://kit.fontawesome.com/a186d658a7.js" crossorigin="anonymous"></script>
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDcTmvr28tpdV8iDiN1K57P_f5kuXmFen4&callback=initMap&v=weekly&channel=2" async></script>
     <link rel="stylesheet" href="../static/css/styles.css">
     <script defer>
 
-        function initMap() {
-            var lat1 = parseFloat("{{networklog.lat}}");
-            var lng1 = parseFloat("{{networklog.lng}}");
+        function initMap()
+        {
+            const latlng = { lat: parseFloat("{{networklog.lat}}"), lng: parseFloat("{{networklog.lng}}") };
             map = new google.maps.Map(document.getElementById("map"), {
-                    center: { lat: lat1, lng: lng1 },
+                    center: latlng,
                     zoom: 16,
                 });
+            new google.maps.Marker({
+              position: latlng,
+              map,
+              title: "Hello World!",
+              });
         }
-
     </script>
 
 
@@ -143,7 +148,6 @@
     <div class="col-sm-12 text-left">
         <footer class="container-fluid text-center">ICT1002 Python Assignment &copy; Map It!</footer>
     </div>
-    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDcTmvr28tpdV8iDiN1K57P_f5kuXmFen4&callback=initMap&v=weekly&channel=2" async></script>
 </body>
 
 </html>
