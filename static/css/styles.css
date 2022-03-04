@@ -1,5 +1,9 @@
 /* Remove the navbar's default margin-bottom and rounded borders */
-
+.container {
+    width: 80%;
+    margin: 15px auto;
+  }
+  
 .navbar {
     margin-bottom: 0;
     border-radius: 0;

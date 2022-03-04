@@ -20,12 +20,8 @@ import secrets
 import export
 import getAttackCounterDictionary
 import getCountryDictionary
-<<<<<<< HEAD
-
 global networklogs
 global ipaddrs
-=======
->>>>>>> a2923c1e67267358ee3f4f07f548fdd6147502dc
 
 # For pagination
 class PageResult:
@@ -96,6 +92,7 @@ for ip in ip_list:
 networklog_by_key = {networklog.key: networklog for networklog in networklogs}
 dictAttack = getAttackCounterDictionary.getAttack(networklogs)
 dictCountry = getCountryDictionary.getCountry(networklogs)
+print(dictCountry)
 
 ###################### Upload Page ################################################################
 @app.route("/" )
@@ -132,7 +129,8 @@ def processing():
     ipaddrs = dataset.iloc[:, 0].values.tolist()
     # Generate CSV
     # Return networklogs and go to home page
-
+    global networklogs
+    #networklogs = 
     return redirect(url_for('home', pagenum=1))
 ###################### Processing End #############################################################
 ###################### Main Page ################################################################
