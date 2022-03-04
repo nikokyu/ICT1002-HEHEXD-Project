@@ -16,6 +16,7 @@ import ip_process
 import ai_process
 from networklog import NetworkLog
 import secrets
+import export
 
 
 app = Flask(__name__)
@@ -115,8 +116,9 @@ def heatmap():
 
 @app.route('/home/download')
 def download():
-   path = "static/download/output.csv" 
-   return send_file(path , as_attachment=True)
+    path = "static/download/output.csv" 
+    export.exportCSV(networklogs)
+    return send_file(path , as_attachment=True)
 
 ###################### Main Page End############################################################
 
