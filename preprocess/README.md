@@ -2,7 +2,7 @@
 
 ## THERE WILL BE ORDER !
 
-python pcap2csv.py [pcap file] <br />
+python pcap2csv.py [pcap file] [user_os] [filepath(optional for window users)]<br />
 python csvprocess.py <br />
 python servcount.py  <br />
 

@@ -70,7 +70,7 @@
   <div class="row">
           {% for networklog in listing %}
           <div class="networklogcard col-sm-4" data-string="{{networklog.attack}}" data-string2="{{networklog.ip}}"
-        data-string3="{{networklog.city}}" data-string4="{{networklog.country}}">
+          data-string3="{{networklog.city}}" data-string4="{{networklog.country}}">
               <div class="card">
                   <h5 class="card-header font-weight-bold">IP: {{networklog.ip}}</h5>
                   <div class="card-body">
@@ -94,7 +94,7 @@
             <li class="page-item"><a class="page-link" href="/home/page/{{listing.page-1}}">Previous</a></li>
             {%endif%}
             <li class="page-item"><a class="page-link" href="{{listing}}">Next</a></li>
-</ul>
+          </ul>
   </div>
 </div>
 

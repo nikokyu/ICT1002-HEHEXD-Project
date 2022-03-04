@@ -120,8 +120,8 @@ def processing():
     # Feed into AI model
     # Generate CSV
     # Return networklogs and go to home page
-
-    print(ip_process.geolocation("223.25.69.206"))
+    global networklogs
+    networklogs = 
     return redirect(url_for('home', pagenum=1))
 ###################### Processing End #############################################################
 ###################### Main Page ################################################################
@@ -153,6 +153,10 @@ def download():
 
 ###################### Main Page End############################################################
 
+app.route('/end')
+def end():
+    # delete variables and start over
+    redirect(url_for('/'))
 
 
 if __name__ == '__main__':
