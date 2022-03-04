@@ -17,6 +17,8 @@ import ai_process
 from networklog import NetworkLog
 import secrets
 import export
+import getAttackCounterDictionary
+import getCountryDictionary
 
 # For pagination
 class PageResult:
@@ -52,6 +54,7 @@ app.config['SECRET_KEY'] =  secrets.token_hex(16)
 #for i in zipped:
     #networklogHTML.append(i)
 
+
 # temporary only
 networklogs = [
     NetworkLog('0', '192.168.10.21', 'example.com', 'Singapore',   37.9045286, -122.1445772, 'org', 'Ransomware'),
@@ -84,6 +87,8 @@ for ip in ip_list:
     i = i+1
 
 networklog_by_key = {networklog.key: networklog for networklog in networklogs}
+dictAttack = getAttackCounterDictionary.getAttack(networklogs)
+dictCountry = getCountryDictionary.getCountry(networklogs)
 
 ###################### Upload Page ################################################################
 @app.route("/" )
@@ -138,7 +143,7 @@ def info(keycode):
 
 @app.route("/home/heatmap")
 def heatmap():
-    return render_template('heatmap.html', networklogs=networklogs)
+    return render_template('heatmap.html', networklogs=networklogs, dictCountry = dictCountry, dictAttack = dictAttack)
 
 @app.route('/home/download')
 def download():
