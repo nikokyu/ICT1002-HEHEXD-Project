@@ -1,4 +1,4 @@
-import sys, csv, os, socket
+import csv, os, socket
 
 
 csv_file = "output.csv"
@@ -45,6 +45,12 @@ with open(csv_file, 'r') as f:
             #for tcp flag
             if row[7]!="": 
                 row[7] = int(row[7],0)
+            else:
+                row[7] = 0
+
+            #for window size
+            if row[10] == "":
+                row[10] = 0
 
             #for duration
             row[11] = float(row[14])

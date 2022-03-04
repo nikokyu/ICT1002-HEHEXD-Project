@@ -7,7 +7,8 @@ from sklearn.ensemble import RandomForestClassifier
 
 def predict(filepath):
     test_dataset = pd.read_csv(filepath, low_memory=False)
-    test_features = test_dataset.iloc[:, [9,10,18,19,27,33,36,41,43,45]].values
+    test_features = test_dataset[["TTL", "window size", "tcp flag", "ct_srv_dst", "ct_dst_sport_ltm"]].values
+    #test_features = test_dataset.iloc[:, [9,10,18,19,27,33,36,41,43,45]].values
 
     # Feature Scaling
     sc = StandardScaler()

@@ -20,12 +20,13 @@ import secrets
 import export
 import getAttackCounterDictionary
 import getCountryDictionary
+
 global networklogs
 global ipaddrs
 
 # For pagination
 class PageResult:
-   def __init__(self, data, page = 1, number = 3):
+   def __init__(self, data, page = 1, number = 15):
      self.__dict__ = dict(zip(['data', 'page', 'number'], [data, page, number]))
      self.full_listing = [self.data[i:i+number] for i in range(0, len(self.data), number)]
    def __iter__(self):
@@ -128,8 +129,7 @@ def processing():
     ipaddrs = dataset.iloc[:, 0].values.tolist()
     # Generate CSV
     # Return networklogs and go to home page
-    global networklogs
-    #networklogs = 
+
     return redirect(url_for('home', pagenum=1))
 ###################### Processing End #############################################################
 ###################### Main Page ################################################################
