@@ -46,52 +46,6 @@ app.config["DEBUG"] = True
 app.config['UPLOAD_FOLDER'] =  'static/files'
 app.config['SECRET_KEY'] =  secrets.token_hex(16)
 
-# To be confirmed on the final iteration
-# Leave all the code here for after backend is done ****
-#networklog_by_key = {networklog.key: networklog for networklog in networklogs}
-#networklog_by_attack = {networklog.attack: networklog for networklog in networklogs}
-#networklogAttack = []
-#networklogHTML = []
-#for i in networklogs:
-    #if i.attack not in networklogAttack:
-        #networklogAttack.append(i.attack)
-#longest = range(len(networklogs))
-#zipped = zip_longest(networklogs, networklogAttack, longest, fillvalue='?')
-#for i in zipped:
-    #networklogHTML.append(i)
-
-
-# temporary only
-# networklogs = [
-#     NetworkLog('0', '192.168.10.21', 'example.com', 'Singapore',   37.9045286, -122.1445772, 'org', 'Ransomware'),
-#     NetworkLog('1', '192.167.21.21', 'example.com', 'Malaysia', 37.8884474, -122.1155922, 'org', 'Ransomware'),
-#     NetworkLog('2', '1.23.12.1', 'example.com', 'Japan', 25.9093673, -126.0580063, 'org', 'Ddos'),
-#     NetworkLog('3', '192.167.21.25', 'example.com', 'Korea', 1.43801, 103.789, 'org', 'Ddos'),
-#     NetworkLog('0', '192.168.10.21', 'example.com', 'Singapore',   37.9045286, -122.1445772, 'org', 'Ransomware'),
-#     NetworkLog('1', '192.167.21.21', 'example.com', 'Malaysia', 37.8884474, -122.1155922, 'org', 'Ransomware'),
-#     NetworkLog('2', '1.23.12.1', 'example.com', 'Japan', 25.9093673, -126.0580063, 'org', 'Ddos'),
-#     NetworkLog('3', '192.167.21.25', 'example.com', 'Korea', 1.43801, 103.789, 'org', 'Ddos'),
-#     NetworkLog('0', '192.168.10.21', 'example.com', 'Singapore',   37.9045286, -122.1445772, 'org', 'Ransomware'),
-#     NetworkLog('1', '192.167.21.21', 'example.com', 'Malaysia', 37.8884474, -122.1155922, 'org', 'Ransomware'),
-#     NetworkLog('2', '1.23.12.1', 'example.com', 'Japan', 25.9093673, -126.0580063, 'org', 'Ddos'),
-#     NetworkLog('3', '192.167.21.25', 'example.com', 'Korea', 1.43801, 103.789, 'org', 'Ddos'),
-#     NetworkLog('0', '192.168.10.21', 'example.com', 'Singapore',   37.9045286, -122.1445772, 'org', 'Ransomware'),
-#     NetworkLog('1', '192.167.21.21', 'example.com', 'Malaysia', 37.8884474, -122.1155922, 'org', 'Ransomware'),
-#     NetworkLog('2', '1.23.12.1', 'example.com', 'Japan', 25.9093673, -126.0580063, 'org', 'Ddos'),
-#     NetworkLog('3', '192.167.21.25', 'example.com', 'Korea', 1.43801, 103.789, 'org', 'Ddos'),
-#     NetworkLog('0', '192.168.10.21', 'example.com', 'Singapore',   37.9045286, -122.1445772, 'org', 'Ransomware'),
-#     NetworkLog('1', '192.167.21.21', 'example.com', 'Malaysia', 37.8884474, -122.1155922, 'org', 'Ransomware'),
-#     NetworkLog('2', '1.23.12.1', 'example.com', 'Japan', 25.9093673, -126.0580063, 'org', 'Ddos'),
-#     NetworkLog('3', '192.167.21.25', 'example.com', 'Korea', 1.43801, 103.789, 'org', 'Ddos'),
-# ]
-# # Example IP API process
-# ip_list = [['1.1.1.1',"Ddos"], ['2.2.2.2', "Ransomware"], ['3.3.3.3', "WannaCry"], ['4.4.4.4', "WannaDie"]]
-# i = 4
-# for ip in ip_list:
-#     geo_dict = ip_process.geolocation(ip[0])
-#     networklogs.append(NetworkLog(str(i), ip[0], geo_dict['hostname'], geo_dict['country'], geo_dict['lat'], geo_dict['lng'], geo_dict['org'], ip[1]))
-#     i = i+1
-
 
 ###################### Upload Page ################################################################
 @app.route("/" )
