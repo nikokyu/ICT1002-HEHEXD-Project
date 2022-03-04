@@ -148,6 +148,10 @@ def download():
 
 ###################### Main Page End############################################################
 
+app.route('/end')
+def end():
+    # delete variables and start over
+    redirect(url_for('/'))
 
 
 if __name__ == '__main__':
