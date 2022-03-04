@@ -4,6 +4,7 @@ import sys
 import json
 import gevent
 import gevent.monkey
+import pandas as pd
 from gevent.pywsgi import WSGIServer
 from datetime import datetime
 from itertools import zip_longest
@@ -17,6 +18,11 @@ import ai_process
 from networklog import NetworkLog
 import secrets
 import export
+import getAttackCounterDictionary
+import getCountryDictionary
+
+global networklogs
+global ipaddrs
 
 # For pagination
 class PageResult:
@@ -52,6 +58,7 @@ app.config['SECRET_KEY'] =  secrets.token_hex(16)
 #for i in zipped:
     #networklogHTML.append(i)
 
+
 # temporary only
 networklogs = [
     NetworkLog('0', '192.168.10.21', 'example.com', 'Singapore',   37.9045286, -122.1445772, 'org', 'Ransomware'),
@@ -84,6 +91,8 @@ for ip in ip_list:
     i = i+1
 
 networklog_by_key = {networklog.key: networklog for networklog in networklogs}
+dictAttack = getAttackCounterDictionary.getAttack(networklogs)
+dictCountry = getCountryDictionary.getCountry(networklogs)
 
 ###################### Upload Page ################################################################
 @app.route("/" )
@@ -110,13 +119,17 @@ def uploadFiles():
 @app.route("/processing")
 def processing():
     # do all processing here
+    global networklogs
+    global ipaddrs
     # Preprocess data
-    # Feed into IP api
     # Feed into AI model
+    dataset = ai_process.predict("static/files/input.csv")
+
+    # Feed into IP api
+    ipaddrs = dataset.iloc[:, 0].values.tolist()
     # Generate CSV
     # Return networklogs and go to home page
-    global networklogs
-    networklogs = 
+
     return redirect(url_for('home', pagenum=1))
 ###################### Processing End #############################################################
 ###################### Main Page ################################################################
@@ -138,11 +151,11 @@ def info(keycode):
 
 @app.route("/home/heatmap")
 def heatmap():
-    return render_template('heatmap.html', networklogs=networklogs)
+    return render_template('heatmap.html', networklogs=networklogs, dictCountry = dictCountry, dictAttack = dictAttack)
 
 @app.route('/home/download')
 def download():
-    path = "static/download/output.csv"
+    path = "static/files/export.csv"
     export.exportCSV(networklogs)
     return send_file(path , as_attachment=True)
 
