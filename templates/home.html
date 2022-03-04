@@ -68,18 +68,33 @@
 
 <div class="col-sm-12 text-left">
   <div class="row">
-          {% for networklog in networklogs %}
-          <div class="networklogcard col-sm-4" data-string="{{networklog.attack}}">
+          {% for networklog in listing %}
+          <div class="networklogcard col-sm-4" data-string="{{networklog.attack}}" data-string2="{{networklog.ip}}"
+        data-string3="{{networklog.city}}" data-string4="{{networklog.country}}">
               <div class="card">
                   <h5 class="card-header font-weight-bold">IP: {{networklog.ip}}</h5>
                   <div class="card-body">
                       <p class="card-text">Country: {{networklog.country}} </p>
                       <p class="card-text">Type of Attack: {{networklog.attack}}</p>
-                      <a class="btn btn-primary" href="home/{{networklog.key}}">Show Map</a>
+                      <a class="btn btn-primary" href="home/networklog/{{networklog.key}}">Show Map</a>
                   </div>
               </div>
           </div>
           {% endfor %}
+          <!-- <ul>
+            {%for item in listing%}
+              <li>{{item}}</li>
+            {%endfor%}
+          </ul> -->
+
+          <ul class="pagination">
+            {%if listing.page == 1%}
+            <li class="page-item disabled"><a class="page-link" href="#">Previous</a></li>
+            {%else%}
+            <li class="page-item"><a class="page-link" href="/home/page/{{listing.page-1}}">Previous</a></li>
+            {%endif%}
+            <li class="page-item"><a class="page-link" href="{{listing}}">Next</a></li>
+</ul>
   </div>
 </div>
 
@@ -93,7 +108,8 @@
             var input = $(this).val().toUpperCase();
 
             $(".networklogcard").each(function () {
-                if ($(this).data("string").toUpperCase().indexOf(input) < 0) {
+              if ($(this).data("string").toUpperCase().indexOf(input) && $(this).data("string2").toUpperCase().indexOf(input)  < 0
+              && $(this).data("string3").toUpperCase().indexOf(input) && $(this).data("string4").toUpperCase().indexOf(input)) {
                     $(this).hide();
                 } else {
                     $(this).show();

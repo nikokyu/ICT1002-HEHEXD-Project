@@ -17,6 +17,15 @@ import ai_process
 from networklog import NetworkLog
 import secrets
 
+class PageResult:
+   def __init__(self, data, page = 1, number = 3):
+     self.__dict__ = dict(zip(['data', 'page', 'number'], [data, page, number]))
+     self.full_listing = [self.data[i:i+number] for i in range(0, len(self.data), number)]
+   def __iter__(self):
+     for i in self.full_listing[self.page-1]:
+       yield i
+   def __repr__(self): #used for page linking
+     return "/home/page/{}".format(self.page+1) #view the next page
 
 app = Flask(__name__)
 # For uploading files
@@ -43,6 +52,22 @@ app.config['SECRET_KEY'] =  secrets.token_hex(16)
 
 # temporary only
 networklogs = [
+    NetworkLog('0', '192.168.10.21', 'example.com', 'Singapore',   37.9045286, -122.1445772, 'org', 'Ransomware'),
+    NetworkLog('1', '192.167.21.21', 'example.com', 'Malaysia', 37.8884474, -122.1155922, 'org', 'Ransomware'),
+    NetworkLog('2', '1.23.12.1', 'example.com', 'Japan', 25.9093673, -126.0580063, 'org', 'Ddos'),
+    NetworkLog('3', '192.167.21.25', 'example.com', 'Korea', 1.43801, 103.789, 'org', 'Ddos'),
+    NetworkLog('0', '192.168.10.21', 'example.com', 'Singapore',   37.9045286, -122.1445772, 'org', 'Ransomware'),
+    NetworkLog('1', '192.167.21.21', 'example.com', 'Malaysia', 37.8884474, -122.1155922, 'org', 'Ransomware'),
+    NetworkLog('2', '1.23.12.1', 'example.com', 'Japan', 25.9093673, -126.0580063, 'org', 'Ddos'),
+    NetworkLog('3', '192.167.21.25', 'example.com', 'Korea', 1.43801, 103.789, 'org', 'Ddos'),
+    NetworkLog('0', '192.168.10.21', 'example.com', 'Singapore',   37.9045286, -122.1445772, 'org', 'Ransomware'),
+    NetworkLog('1', '192.167.21.21', 'example.com', 'Malaysia', 37.8884474, -122.1155922, 'org', 'Ransomware'),
+    NetworkLog('2', '1.23.12.1', 'example.com', 'Japan', 25.9093673, -126.0580063, 'org', 'Ddos'),
+    NetworkLog('3', '192.167.21.25', 'example.com', 'Korea', 1.43801, 103.789, 'org', 'Ddos'),
+    NetworkLog('0', '192.168.10.21', 'example.com', 'Singapore',   37.9045286, -122.1445772, 'org', 'Ransomware'),
+    NetworkLog('1', '192.167.21.21', 'example.com', 'Malaysia', 37.8884474, -122.1155922, 'org', 'Ransomware'),
+    NetworkLog('2', '1.23.12.1', 'example.com', 'Japan', 25.9093673, -126.0580063, 'org', 'Ddos'),
+    NetworkLog('3', '192.167.21.25', 'example.com', 'Korea', 1.43801, 103.789, 'org', 'Ddos'),
     NetworkLog('0', '192.168.10.21', 'example.com', 'Singapore',   37.9045286, -122.1445772, 'org', 'Ransomware'),
     NetworkLog('1', '192.167.21.21', 'example.com', 'Malaysia', 37.8884474, -122.1155922, 'org', 'Ransomware'),
     NetworkLog('2', '1.23.12.1', 'example.com', 'Japan', 25.9093673, -126.0580063, 'org', 'Ddos'),
@@ -90,15 +115,19 @@ def processing():
     # Return networklogs and go to home page
 
     print(ip_process.geolocation("223.25.69.206"))
-    return redirect(url_for('home'))
+    return redirect(url_for('home', pagenum=1))
 ###################### Processing End #############################################################
 ###################### Main Page ################################################################
-@app.route("/home")
-def home():
-    return render_template('home.html', networklogs=networklogs)
+#@app.route("/home")
+#def home():
+    #return render_template('home.html', networklogs=networklogs)
 
-@app.route("/home/<keycode>")
-def homeShowDetails(keycode):
+@app.route("/home/page/<int:pagenum>")
+def home(pagenum):
+    return render_template('home.html', listing = PageResult(networklogs, pagenum))
+
+@app.route("/home/networklog/<keycode>")
+def info(keycode):
     networklog = networklog_by_key.get(keycode)
     if networklog:
         return render_template('info.html', networklog=networklog)
