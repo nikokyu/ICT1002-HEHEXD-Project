@@ -28,6 +28,6 @@ python3 -m virtualenv venv
 
 pip3 install -r requirements.txt
 
-./run_web_server.bat
+run_web_server.bat
 
 ```
