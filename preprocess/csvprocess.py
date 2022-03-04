@@ -2,7 +2,7 @@ import sys, csv, os, socket
 
 
 csv_file = "output.csv"
-headers = ["frame number","source ip","source port","dest ip","dest port","ip protocol","service","tcp flag","frame length","TTL","window size","Duration","ignored"]
+headers = ["frame number","srcip","sport","dstip","dport","proto","service","tcp flag","frame length","TTL","window size","Duration","ignored"]
 
 if os.path.exists("out.csv"):
     os.remove("out.csv")
