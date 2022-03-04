@@ -14,7 +14,7 @@
     <!-- Google Map API -->
     <script src="https://polyfill.io/v3/polyfill.min.js?features=default"></script>
     <!-- <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDcTmvr28tpdV8iDiN1K57P_f5kuXmFen4&callback=initMap&v=weekly&channel=2"></script> -->
-    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDcTmvr28tpdV8iDiN1K57P_f5kuXmFen4&callback=initMap&libraries=visualization&v=weekly&channel=2" async></script>
+    <script defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDcTmvr28tpdV8iDiN1K57P_f5kuXmFen4&callback=initMap&v=weekly&channel=2"></script>
     <script src="https://kit.fontawesome.com/a186d658a7.js" crossorigin="anonymous"></script>
     <link rel="stylesheet" href="../static/css/styles.css">
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
@@ -153,6 +153,11 @@ function getPoints() {
                     <li class="active"><a href="/home/page/1">Home <span class="sr-only">(current)</span></a></li>
                 </ul>
                 <!-- Search bar -->
+                <ul class="nav navbar-nav navbar-right">
+                  <form class="navbar-form navbar-right">
+                      <a class="btn btn-primary" href="heatmap/download">Export</a>
+                  </form>
+              </ul>
             </div>
             <!-- /.navbar-collapse -->
         </div>

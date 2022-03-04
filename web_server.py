@@ -92,7 +92,6 @@ for ip in ip_list:
 networklog_by_key = {networklog.key: networklog for networklog in networklogs}
 dictAttack = getAttackCounterDictionary.getAttack(networklogs)
 dictCountry = getCountryDictionary.getCountry(networklogs)
-print(dictCountry)
 
 ###################### Upload Page ################################################################
 @app.route("/" )
@@ -134,9 +133,10 @@ def processing():
     return redirect(url_for('home', pagenum=1))
 ###################### Processing End #############################################################
 ###################### Main Page ################################################################
-#@app.route("/home")
-#def home():
-    #return render_template('home.html', networklogs=networklogs)
+
+# @app.route("/home")
+# def home1():
+#     return render_template('home.html', networklogs=networklogs)
 
 @app.route("/home/page/<int:pagenum>")
 def home(pagenum):
@@ -154,9 +154,9 @@ def info(keycode):
 def heatmap():
     return render_template('heatmap.html', networklogs=networklogs, dictCountry = dictCountry, dictAttack = dictAttack)
 
-@app.route('/home/download')
+@app.route('/home/heatmap/download')
 def download():
-    path = "static/files/export.csv"
+    path = "static/download/output.csv"
     export.exportCSV(networklogs)
     return send_file(path , as_attachment=True)
 
