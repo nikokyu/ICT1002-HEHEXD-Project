@@ -18,6 +18,7 @@ from networklog import NetworkLog
 import secrets
 import export
 
+# For pagination
 class PageResult:
    def __init__(self, data, page = 1, number = 3):
      self.__dict__ = dict(zip(['data', 'page', 'number'], [data, page, number]))
@@ -141,7 +142,7 @@ def heatmap():
 
 @app.route('/home/download')
 def download():
-    path = "static/download/output.csv" 
+    path = "static/download/output.csv"
     export.exportCSV(networklogs)
     return send_file(path , as_attachment=True)
 
