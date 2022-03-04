@@ -20,9 +20,12 @@ import secrets
 import export
 import getAttackCounterDictionary
 import getCountryDictionary
+<<<<<<< HEAD
 
 global networklogs
 global ipaddrs
+=======
+>>>>>>> a2923c1e67267358ee3f4f07f548fdd6147502dc
 
 # For pagination
 class PageResult:
