@@ -22,7 +22,9 @@ import getAttackCounterDictionary
 import getCountryDictionary
 
 global networklogs
-global ipaddrs
+global networklog_by_key
+global dictAttack
+global dictCountry
 
 # For pagination
 class PageResult:
@@ -60,39 +62,36 @@ app.config['SECRET_KEY'] =  secrets.token_hex(16)
 
 
 # temporary only
-networklogs = [
-    NetworkLog('0', '192.168.10.21', 'example.com', 'Singapore',   37.9045286, -122.1445772, 'org', 'Ransomware'),
-    NetworkLog('1', '192.167.21.21', 'example.com', 'Malaysia', 37.8884474, -122.1155922, 'org', 'Ransomware'),
-    NetworkLog('2', '1.23.12.1', 'example.com', 'Japan', 25.9093673, -126.0580063, 'org', 'Ddos'),
-    NetworkLog('3', '192.167.21.25', 'example.com', 'Korea', 1.43801, 103.789, 'org', 'Ddos'),
-    NetworkLog('0', '192.168.10.21', 'example.com', 'Singapore',   37.9045286, -122.1445772, 'org', 'Ransomware'),
-    NetworkLog('1', '192.167.21.21', 'example.com', 'Malaysia', 37.8884474, -122.1155922, 'org', 'Ransomware'),
-    NetworkLog('2', '1.23.12.1', 'example.com', 'Japan', 25.9093673, -126.0580063, 'org', 'Ddos'),
-    NetworkLog('3', '192.167.21.25', 'example.com', 'Korea', 1.43801, 103.789, 'org', 'Ddos'),
-    NetworkLog('0', '192.168.10.21', 'example.com', 'Singapore',   37.9045286, -122.1445772, 'org', 'Ransomware'),
-    NetworkLog('1', '192.167.21.21', 'example.com', 'Malaysia', 37.8884474, -122.1155922, 'org', 'Ransomware'),
-    NetworkLog('2', '1.23.12.1', 'example.com', 'Japan', 25.9093673, -126.0580063, 'org', 'Ddos'),
-    NetworkLog('3', '192.167.21.25', 'example.com', 'Korea', 1.43801, 103.789, 'org', 'Ddos'),
-    NetworkLog('0', '192.168.10.21', 'example.com', 'Singapore',   37.9045286, -122.1445772, 'org', 'Ransomware'),
-    NetworkLog('1', '192.167.21.21', 'example.com', 'Malaysia', 37.8884474, -122.1155922, 'org', 'Ransomware'),
-    NetworkLog('2', '1.23.12.1', 'example.com', 'Japan', 25.9093673, -126.0580063, 'org', 'Ddos'),
-    NetworkLog('3', '192.167.21.25', 'example.com', 'Korea', 1.43801, 103.789, 'org', 'Ddos'),
-    NetworkLog('0', '192.168.10.21', 'example.com', 'Singapore',   37.9045286, -122.1445772, 'org', 'Ransomware'),
-    NetworkLog('1', '192.167.21.21', 'example.com', 'Malaysia', 37.8884474, -122.1155922, 'org', 'Ransomware'),
-    NetworkLog('2', '1.23.12.1', 'example.com', 'Japan', 25.9093673, -126.0580063, 'org', 'Ddos'),
-    NetworkLog('3', '192.167.21.25', 'example.com', 'Korea', 1.43801, 103.789, 'org', 'Ddos'),
-]
-# Example IP API process
-ip_list = [['1.1.1.1',"Ddos"], ['2.2.2.2', "Ransomware"], ['3.3.3.3', "WannaCry"], ['4.4.4.4', "WannaDie"]]
-i = 4
-for ip in ip_list:
-    geo_dict = ip_process.geolocation(ip[0])
-    networklogs.append(NetworkLog(str(i), ip[0], geo_dict['hostname'], geo_dict['country'], geo_dict['lat'], geo_dict['lng'], geo_dict['org'], ip[1]))
-    i = i+1
+# networklogs = [
+#     NetworkLog('0', '192.168.10.21', 'example.com', 'Singapore',   37.9045286, -122.1445772, 'org', 'Ransomware'),
+#     NetworkLog('1', '192.167.21.21', 'example.com', 'Malaysia', 37.8884474, -122.1155922, 'org', 'Ransomware'),
+#     NetworkLog('2', '1.23.12.1', 'example.com', 'Japan', 25.9093673, -126.0580063, 'org', 'Ddos'),
+#     NetworkLog('3', '192.167.21.25', 'example.com', 'Korea', 1.43801, 103.789, 'org', 'Ddos'),
+#     NetworkLog('0', '192.168.10.21', 'example.com', 'Singapore',   37.9045286, -122.1445772, 'org', 'Ransomware'),
+#     NetworkLog('1', '192.167.21.21', 'example.com', 'Malaysia', 37.8884474, -122.1155922, 'org', 'Ransomware'),
+#     NetworkLog('2', '1.23.12.1', 'example.com', 'Japan', 25.9093673, -126.0580063, 'org', 'Ddos'),
+#     NetworkLog('3', '192.167.21.25', 'example.com', 'Korea', 1.43801, 103.789, 'org', 'Ddos'),
+#     NetworkLog('0', '192.168.10.21', 'example.com', 'Singapore',   37.9045286, -122.1445772, 'org', 'Ransomware'),
+#     NetworkLog('1', '192.167.21.21', 'example.com', 'Malaysia', 37.8884474, -122.1155922, 'org', 'Ransomware'),
+#     NetworkLog('2', '1.23.12.1', 'example.com', 'Japan', 25.9093673, -126.0580063, 'org', 'Ddos'),
+#     NetworkLog('3', '192.167.21.25', 'example.com', 'Korea', 1.43801, 103.789, 'org', 'Ddos'),
+#     NetworkLog('0', '192.168.10.21', 'example.com', 'Singapore',   37.9045286, -122.1445772, 'org', 'Ransomware'),
+#     NetworkLog('1', '192.167.21.21', 'example.com', 'Malaysia', 37.8884474, -122.1155922, 'org', 'Ransomware'),
+#     NetworkLog('2', '1.23.12.1', 'example.com', 'Japan', 25.9093673, -126.0580063, 'org', 'Ddos'),
+#     NetworkLog('3', '192.167.21.25', 'example.com', 'Korea', 1.43801, 103.789, 'org', 'Ddos'),
+#     NetworkLog('0', '192.168.10.21', 'example.com', 'Singapore',   37.9045286, -122.1445772, 'org', 'Ransomware'),
+#     NetworkLog('1', '192.167.21.21', 'example.com', 'Malaysia', 37.8884474, -122.1155922, 'org', 'Ransomware'),
+#     NetworkLog('2', '1.23.12.1', 'example.com', 'Japan', 25.9093673, -126.0580063, 'org', 'Ddos'),
+#     NetworkLog('3', '192.167.21.25', 'example.com', 'Korea', 1.43801, 103.789, 'org', 'Ddos'),
+# ]
+# # Example IP API process
+# ip_list = [['1.1.1.1',"Ddos"], ['2.2.2.2', "Ransomware"], ['3.3.3.3', "WannaCry"], ['4.4.4.4', "WannaDie"]]
+# i = 4
+# for ip in ip_list:
+#     geo_dict = ip_process.geolocation(ip[0])
+#     networklogs.append(NetworkLog(str(i), ip[0], geo_dict['hostname'], geo_dict['country'], geo_dict['lat'], geo_dict['lng'], geo_dict['org'], ip[1]))
+#     i = i+1
 
-networklog_by_key = {networklog.key: networklog for networklog in networklogs}
-dictAttack = getAttackCounterDictionary.getAttack(networklogs)
-dictCountry = getCountryDictionary.getCountry(networklogs)
 
 ###################### Upload Page ################################################################
 @app.route("/" )
@@ -105,7 +104,7 @@ def uploadFiles():
       # get the uploaded file
       uploaded_file = request.files['file']
       if uploaded_file.filename != '':
-           file_path = os.path.join(app.config['UPLOAD_FOLDER'], uploaded_file.filename)
+           file_path = os.path.join(app.config['UPLOAD_FOLDER'], "input.pcap")
           # set the file path
            uploaded_file.save(file_path)
           # save the file
@@ -120,16 +119,30 @@ def uploadFiles():
 def processing():
     # do all processing here
     global networklogs
-    global ipaddrs
-    # Preprocess data
+    global networklog_by_key
+    global dictAttack
+    global dictCountry
+    networklogs = []
+    dictIP = {}
+    # Preprocess data, output to static/files/out.csv
+    preprocess.pcap_to_csv("static/files/input.pcap")
     # Feed into AI model
-    dataset = ai_process.predict("static/files/input.csv")
-
+    dataset = ai_process.predict("static/files/out.csv")
+    # Drop rows with non attack
+    dataset = dataset.drop(dataset[dataset.attackcat == "Normal"].index)
     # Feed into IP api
-    ipaddrs = dataset.iloc[:, 0].values.tolist()
-    # Generate CSV
-    # Return networklogs and go to home page
-
+    ipaddrs = list(set(dataset['srcip'].values.tolist()))
+    for ip in ipaddrs:
+        dictIP[ip] = ip_process.geolocation(ip)
+    # generate networklogs
+    for index, row in dataset.iterrows():
+        dict = dictIP[row['srcip']]
+        networklogs.append(NetworkLog(index, row['srcip'], row['sport'], row['dstip'], row['dport'], dict['hostname'],
+        dict['country'], dict['lat'], dict['lng'], dict['org'], row['attackcat']))
+    networklog_by_key = {networklog.key: networklog for networklog in networklogs}
+    dictAttack = getAttackCounterDictionary.getAttack(networklogs)
+    dictCountry = getCountryDictionary.getCountry(networklogs)
+    # Go to home page
     return redirect(url_for('home', pagenum=1))
 ###################### Processing End #############################################################
 ###################### Main Page ################################################################

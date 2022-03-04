@@ -1,9 +1,0 @@
-ip,hostname,country,lat,lng,org,attack
-192.168.10.21,example.com,Singapore,37.9045286,-122.1445772,org,Ransomware
-192.167.21.21,example.com,Malaysia,37.8884474,-122.1155922,org,Ransomware
-1.23.12.1,example.com,Japan,25.9093673,-126.0580063,org,Ddos
-192.167.21.25,example.com,Korea,1.43801,103.789,org,Ddos
-1.1.1.1,one.one.one.one,US,25.7867,-80.18,"AS13335 Cloudflare, Inc.",Ddos
-2.2.2.2,,FR,48.8024,2.2935,AS3215 Orange S.A.,Ransomware
-3.3.3.3,,US,37.3394,-121.895,,WannaCry
-4.4.4.4,,US,34.143,-118.3913,"AS3356 Level 3 Parent, LLC",WannaDie

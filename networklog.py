@@ -1,8 +1,11 @@
 # NetworkLog class to store results from analysis
 class NetworkLog:
-    def __init__(self, key, ip, hostname, country, lat, lng, org, attack):
+    def __init__(self, key, srcip, sport, dstip, dport, hostname, country, lat, lng, org, attack):
         self.key = key
-        self.ip  = ip
+        self.srcip  = srcip
+        self.sport  = sport
+        self.dstip  = dstip
+        self.dport  = dport
         self.hostname = hostname
         self.country = country
         self.lat  = lat
