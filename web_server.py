@@ -28,8 +28,8 @@ global dictCountry
 
 # For pagination
 class PageResult:
-   def __init__(self, data, page = 1, number = 15):
-     self.__dict__ = dict(zip(['data', 'page', 'number'], [data, page, number]))
+   def __init__(self, data, page = 1, last = 1, number=1):
+     self.__dict__ = dict(zip(['data', 'page', 'last', 'number'], [data, page, last, number]))
      self.full_listing = [self.data[i:i+number] for i in range(0, len(self.data), number)]
    def __iter__(self):
      for i in self.full_listing[self.page-1]:
@@ -111,7 +111,12 @@ def processing():
 
 @app.route("/home/page/<int:pagenum>")
 def home(pagenum):
-    return render_template('home.html', listing = PageResult(networklogs, pagenum))
+    if len(networklogs) < 15:
+        number = len(networklogs)
+    else:
+        number = 15
+    print(number)
+    return render_template('home.html', listing = PageResult(networklogs, pagenum, len(networklogs)//number+1, number))
 
 @app.route("/home/networklog/<keycode>")
 def info(keycode):

@@ -30,7 +30,7 @@ def exec():
 
                 #for ip protocol
                 protocols = row[6].split(":")
-                row[5] = protocols[3]
+                row[5] = ''
 
                 #for service
                 try:
