@@ -1,8 +1,7 @@
 # ICT1002-HEHEXD
 
 Map It! A web application written with Flask and analyzes pcap files to produce useful information :)
-Please take note that it will take a long time if the pcap file is larger than 1MB.
-
+Please take note that it will take a long time if the pcap file is larger than 1MB, as such we recommend you using the pcap file in example_pcap dir.
 ## Installation
 ```
 git clone git@github.com:djmeowmix25/ICT1002-HEHEXD.git
