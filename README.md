@@ -1,6 +1,7 @@
 # ICT1002-HEHEXD
 
 Map It! A web application written with Flask and analyzes pcap files to produce useful information :)
+Please take note that it will take a long time if the pcap file is larger than 1MB.
 
 ## Installation
 ```
@@ -30,4 +31,3 @@ pip3 install -r requirements.txt
 ./run_web_server.bat
 
 ```
-### Please take note that it will take a long time if the pcap file is larger than 1MB.
