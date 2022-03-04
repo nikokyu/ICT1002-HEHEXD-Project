@@ -89,6 +89,7 @@ for ip in ip_list:
 networklog_by_key = {networklog.key: networklog for networklog in networklogs}
 dictAttack = getAttackCounterDictionary.getAttack(networklogs)
 dictCountry = getCountryDictionary.getCountry(networklogs)
+print(dictCountry)
 
 ###################### Upload Page ################################################################
 @app.route("/" )
@@ -121,7 +122,7 @@ def processing():
     # Generate CSV
     # Return networklogs and go to home page
     global networklogs
-    networklogs = 
+    #networklogs = 
     return redirect(url_for('home', pagenum=1))
 ###################### Processing End #############################################################
 ###################### Main Page ################################################################

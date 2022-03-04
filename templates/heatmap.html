@@ -17,6 +17,8 @@
     <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDcTmvr28tpdV8iDiN1K57P_f5kuXmFen4&callback=initMap&libraries=visualization&v=weekly&channel=2" async></script>
     <script src="https://kit.fontawesome.com/a186d658a7.js" crossorigin="anonymous"></script>
     <link rel="stylesheet" href="../static/css/styles.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
     <script defer>
 let map, heatmap;
 
@@ -86,6 +88,10 @@ function getPoints() {
   return points;
 }
     </script>
+    
+    
+    
+
 <style>
     #map {
         height: 100%;
@@ -169,7 +175,6 @@ function getPoints() {
       </div>
     </div>
     </div> -->
-
     <div id="floating-panel">
         <button id="toggle-heatmap">Toggle Heatmap</button>
         <button id="change-gradient">Change gradient</button>
@@ -178,11 +183,113 @@ function getPoints() {
       </div>
     <div id="map"></div>
 
+
+    <div class="col-sm-12 text-left">
+      <div class="row">
+
+      </div>
+      <div class="row">
+
+              <div class="col-sm-6">
+                  <div class="card">
+                      <h5 class="card-header font-weight-bold">Types of Attacks</h5>
+                      <div class="card-body">
+                        <div class="container">
+                          <div>
+                            <canvas id="myChart"></canvas>
+                          </div>
+                        </div>
+                      </div>
+                  </div>
+              </div>
+
+              <div class="col-sm-6">
+                <div class="card">
+                    <h5 class="card-header font-weight-bold">Country of Origins</h5>
+                    <div class="card-body">
+                      <div class="container">
+                        <div>
+                          <canvas id="myChart2"></canvas>
+                        </div>
+                      </div>
+                    </div>
+                </div>
+            </div>
+
+      </div>
+    </div>
+    
+
     <p>&nbsp;</p>
 
     <div class="col-md-14 text-center with-border">
         <footer class="container-fluid text-center">ICT1002 Python Assignment &copy; Map It!</footer>
     </div>
+    <script>
+      var randColors = () =>  {
+        return "#" + Math.floor(Math.random()*16777215).toString(16).padStart(6, '0').toUpperCase();
+        }
+      var labelsAttackArray = [];
+      var dataAttackArray = [];
+      var colors1 = [];
+      var labelsArray = [];
+      var dataArray = [];
+      var colors = [];
+
+      
+
+      {% for attack in dictAttack %}
+      labelsAttackArray.push("{{attack}}");
+      dataAttackArray.push("{{dictAttack[attack]}}");
+      colors1.push(randColors());
+      {% endfor %} 
+
+      {% for country in dictCountry %}
+      labelsArray.push("{{country}}");
+      dataArray.push("{{dictCountry[country]}}");
+      colors.push(randColors());
+      {% endfor %} 
+      
+      var config1 = {
+        type: 'pie',
+        data: {
+        labels: labelsAttackArray,
+        datasets: [{
+        backgroundColor: colors1,
+      data: dataAttackArray
+    }]
+  }
+};
+      var config2 = {
+        type: 'pie',
+        data: {
+        labels: labelsArray,
+        datasets: [{
+        backgroundColor: colors,
+      data: dataArray
+    }]
+  }
+};
+window.onload = function() {
+  var ctx = document.getElementById("myChart");
+  window.myLine= new Chart(ctx, config1);
+  var ctx2 = document.getElementById("myChart2");
+  window.myLine = new Chart(ctx2, config2);
+    }
+
+  
+    </script>
+
+<script>
+  //Country Pie Chart Script
+
+  
+
+  
+  
+  
+  
+</script>
 </body>
 
 </html>
