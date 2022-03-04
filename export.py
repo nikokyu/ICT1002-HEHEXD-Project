@@ -3,7 +3,7 @@ import os
 
 
 def exportCSV(networklogs):
-    path = "static/files/export.csv"
+    path = "static/download/output.csv"
 
     header = ['ip', 'hostname', 'country', 'lat', 'lng', 'org', 'attack']
 
