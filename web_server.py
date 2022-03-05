@@ -115,7 +115,6 @@ def home(pagenum):
         number = len(networklogs)
     else:
         number = 15
-    print(number)
     return render_template('home.html', listing = PageResult(networklogs, pagenum, len(networklogs)//number+1, number))
 
 @app.route("/home/networklog/<keycode>")

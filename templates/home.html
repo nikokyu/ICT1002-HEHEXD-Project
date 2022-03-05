@@ -68,7 +68,7 @@
 <div class="col-sm-12 text-left">
   <div class="row">
           {% for networklog in listing %}
-          <div class="networklogcard col-sm-4" data-string="{{networklog.attack}}" data-string2="{{networklog.ip}}"
+          <div class="networklogcard col-sm-4" data-string="{{networklog.attack}}" data-string2="{{networklog.srcip}}"
           data-string3="{{networklog.city}}" data-string4="{{networklog.country}}">
               <div class="card">
                   <h5 class="card-header font-weight-bold">IP: {{networklog.srcip}}</h5>
@@ -110,7 +110,7 @@
             var input = $(this).val().toUpperCase();
 
             $(".networklogcard").each(function () {
-              if ($(this).data("string").toUpperCase().indexOf(input) && $(this).data("string2").toUpperCase().indexOf(input)  < 0
+              if ($(this).data("string").toUpperCase().indexOf(input) && $(this).data("string2").toUpperCase().indexOf(input)
               && $(this).data("string3").toUpperCase().indexOf(input) && $(this).data("string4").toUpperCase().indexOf(input)) {
                     $(this).hide();
                 } else {
